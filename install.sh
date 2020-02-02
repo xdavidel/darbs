@@ -137,7 +137,7 @@ putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only 
 	sudo -u "$name" cp -rf "$dir/gitrepo" "$2"
 	}
 
-activatedofiles() {
+activatedotfiles() {
 	function dotconf {
 		/usr/bin/git --git-dir=/home/$name/.dotfiles/ --work-tree=$HOME $@
 	}
@@ -215,10 +215,10 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 installationloop
 
 # Install the dotfiles in the user's home directory
-putgitbarerepo "$dotfilesrepo" "/home/$name/.dofiles" "$repobranch"
+putgitbarerepo "$dotfilesrepo" "/home/$name/.dotfiles" "$repobranch"
 rm -f "/home/$name/README.md" "/home/$name/LICENSE"
 
-activatedofiles
+activatedotfiles
 
 # Pulseaudio, if/when initially installed, often needs a restart to work immediately.
 [ -f /usr/bin/pulseaudio ] && resetpulse
