@@ -139,7 +139,7 @@ putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only 
 
 activatedotfiles() {
 	function dotconf {
-		/usr/bin/git --git-dir=/home/$name/.dotfiles/ --work-tree=$HOME $@
+		/usr/bin/git --git-dir=/home/$name/.local/dotfiles/ --work-tree=$HOME $@
 	}
 
 	dotconf checkout
@@ -215,7 +215,7 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 installationloop
 
 # Install the dotfiles in the user's home directory
-putgitbarerepo "$dotfilesrepo" "/home/$name/.dotfiles" "$repobranch"
+putgitbarerepo "$dotfilesrepo" "/home/$name/.local/dotfiles" "$repobranch"
 rm -f "/home/$name/README.md" "/home/$name/LICENSE"
 
 activatedotfiles
