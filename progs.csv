@@ -5,13 +5,16 @@
 ,sxhkd,binds key.
 ,ttf-inconsolata,is the monospace font of DARBS.
 ,ttf-linux-libertine,provides the sans and serif fonts for DARBS.
+,ttf-font-awesome,provides font awesome icons.
 ,vifm,is an extensive terminal file manager that everyone likes.
-A,lf,a ranger like file manager.
-,pcmanfm,GUI file manager.
+A,lf-bin,a ranger like file manager.
+,pcmanfm-gtk3,GUI file manager.
+,gvfs,an auto mounting driver.
 ,ed,is the standard editor!
 ,tree,lists directory contents like trees. Used by vifm.
 ,arandr,is a UI for screen adjustment.
 ,bc,is used for a dropdown calculator.
+,man,menual pages for programs.
 ,calcurse,is a lightweight terminal-based calendar.
 ,xcompmgr,is for transparency and removing screen-tearing.
 ,xorg-xprop,is a tool for detecting window properties.
@@ -25,10 +28,15 @@ A,lf,a ranger like file manager.
 ,gnome-keyring,serves as the system keyring.
 ,materia-gtk-theme,gives the dark GTK theme used in DARBS.
 ,neovim,an tidier vim with some useful features.
+,alacritty,a second terminal with GPU rendering.
+,awewome,the basic window manager based on dwm.
 ,geany,GUI text editor.
 ,i3lock,is the screen lock.
 ,dmenu,is the default app runner.
 ,rofi,is another app runner.
+,nodejs,javascript engine for dev (and nvim autocompletions).
+,npm,nodejs package manager.
+,ccls,language server for c/c++.
 ,mpd,is a lightweight music daemon.
 ,mpc,is a terminal interface for mpd.
 ,mpv,is the patrician's choice video player.

@@ -129,20 +129,16 @@ putgitrepo() { # Downlods a gitrepo $1 and places the files in $2 only overwriti
 
 putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only overwriting conflicts
 	dialog --infobox "Downloading and installing bare config files..." 4 60
-	[ -z "$3" ] && branch="master" || branch="$repobranch"
-	dir=$(mktemp -d)
-	[ ! -d "$2" ] && mkdir -p "$2" && chown -R "$name:wheel" "$2"
-	chown -R "$name:wheel" "$dir"
-	sudo -u "$name" git clone --bare -b "$branch" --depth 1 "$1" "$dir/gitrepo" >/dev/null 2>&1 &&
-	sudo -u "$name" cp -rf "$dir/gitrepo" "$2"
+	[ ! -d "$2" ] && mkdir -p "$2/dotfiles" && chown -R "$name:wheel" "$2"
+	git clone --bare "$1" "$2/dotfiles" >/dev/null 2>&1
 	}
 
 activatedotfiles() {
 	function dotconf {
-		/usr/bin/git --git-dir=/home/$name/.local/dotfiles/ --work-tree=$HOME $@
+		/usr/bin/git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name $@
 	}
 
-	dotconf checkout
+	dotconf checkout .
 	dotconf config status.showUntrackedFiles no
 	}
 
@@ -215,9 +211,10 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 installationloop
 
 # Install the dotfiles in the user's home directory
-putgitbarerepo "$dotfilesrepo" "/home/$name/.local/dotfiles" "$repobranch"
+putgitbarerepo "$dotfilesrepo" "/home/$name/.local" && activatedotfiles
 rm -f "/home/$name/README.md" "/home/$name/LICENSE"
-
+rm -f "/home/$name/.bash*"
+rm -rf "/home/$name/.config"
 activatedotfiles
 
 # Pulseaudio, if/when initially installed, often needs a restart to work immediately.
