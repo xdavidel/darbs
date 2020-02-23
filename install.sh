@@ -133,7 +133,7 @@ putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only 
 	[ ! -d "$2" ] && mkdir -p "$2" && chown -R "$name:wheel" "$2"
 	chown -R "$name:wheel" "$dir"
 	sudo -u "$name" git clone --bare "$1" "$dir/gitrepo" >/dev/null 2>&1 &&
-	sudo -u "$name" cp -rfT "$dir/gitrepo" "$2" 
+	sudo -u "$name" cp -rfT "$dir/gitrepo" "$2"
 	}
 
 activatedotfiles() {
@@ -193,7 +193,11 @@ pacman --noconfirm --needed -S base-devel git >/dev/null 2>&1
 
 # Allow user to run sudo without password. Since AUR programs must be installed
 # in a fakeroot environment, this is required for all builds with AUR.
-newperms "%wheel ALL=(ALL) NOPASSWD: ALL"
+newperms "%wheel ALL=(ALL) NOPASSWD: ALL
+%wheel ALL=(ALL NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/packer -Syu,/usr/bin/packer -Syyu,/usr/bin/systemctl restart NetworkManager,/usr/bin/rc-service NetworkManager restart,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/yay,/usr/bin/pacman -Syyuw --noconfirm"
+
+# Make zsh the default shell for the user
+sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
 
 # Make pacman and yay colorful and adds eye candy on the progress bar because why not.
 grep "^Color" /etc/pacman.conf >/dev/null || sed -i "s/^#Color/Color/" /etc/pacman.conf
