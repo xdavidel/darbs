@@ -22,7 +22,7 @@ esac done
 error() { clear; printf "ERROR:\\n%s\\n" "$1"; exit;}
 
 welcomemsg() { \
-	dialog --title "Welcome!" --msgbox "Welcome to the Auto-Rice Bootstrapping Script!\\n\\nThis script will automatically install a fully-featured i3wm Arch Linux desktop, which I use as my main machine." 10 60
+	dialog --title "Welcome!" --msgbox "Welcome to the Auto-Rice Bootstrapping Script!\\n\\nThis script will automatically install a fully-featured Arch Linux desktop, which I use as my main machine." 10 60
 	}
 
 getuserandpass() { \
@@ -105,7 +105,7 @@ pipinstall() { \
 installationloop() { \
 	([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' > /tmp/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
-	aurinstalled=$(pacman -Qm | awk '{print $1}')
+	aurinstalled=$(pacman -Qqm)
 	while IFS=, read -r tag program comment; do
 		n=$((n+1))
 		echo "$comment" | grep "^\".*\"$" >/dev/null 2>&1 && comment="$(echo "$comment" | sed "s/\(^\"\|\"$\)//g")"
@@ -129,17 +129,17 @@ putgitrepo() { # Downlods a gitrepo $1 and places the files in $2 only overwriti
 
 putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only overwriting conflicts
 	dialog --infobox "Downloading and installing bare config files..." 4 60
-	[ ! -d "$2" ] && mkdir -p "$2/dotfiles" && chown -R "$name:wheel" "$2"
-	git clone --bare "$1" "$2/dotfiles" >/dev/null 2>&1
+	dir=$(mktemp -d)
+	[ ! -d "$2" ] && mkdir -p "$2" && chown -R "$name:wheel" "$2"
+	chown -R "$name:wheel" "$dir"
+	sudo -u "$name" git clone --bare "$1" "$dir/gitrepo" >/dev/null 2>&1 &&
+	sudo -u "$name" cp -rfT "$dir/gitrepo" "$2" 
 	}
 
 activatedotfiles() {
-	function dotconf {
-		/usr/bin/git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name $@
-	}
-
-	dotconf checkout .
-	dotconf config status.showUntrackedFiles no
+	sudo -u "$name" git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name checkout HEAD^
+	sudo -u "$name" git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name checkout -f master
+	sudo -u "$name" git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name config status.showUntrackedFiles no
 	}
 
 serviceinit() { for service in "$@"; do
@@ -211,10 +211,8 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 installationloop
 
 # Install the dotfiles in the user's home directory
-putgitbarerepo "$dotfilesrepo" "/home/$name/.local" && activatedotfiles
-rm -f "/home/$name/README.md" "/home/$name/LICENSE"
-rm -f "/home/$name/.bash*"
-rm -rf "/home/$name/.config"
+putgitbarerepo "$dotfilesrepo" "/home/$name/.local/dotfiles"
+chown -R "$name:wheel" "/home/$name/.local"
 activatedotfiles
 
 # Pulseaudio, if/when initially installed, often needs a restart to work immediately.
