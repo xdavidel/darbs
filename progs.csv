@@ -28,6 +28,7 @@ A,lf-bin,a ranger like file manager.
 ,gnome-keyring,serves as the system keyring.
 ,materia-gtk-theme,gives the dark GTK theme used in DARBS.
 ,neovim,an tidier vim with some useful features.
+,zsh,a better shell for the current millenia.
 ,alacritty,a second terminal with GPU rendering.
 ,awesome,the basic window manager based on dwm.
 ,geany,GUI text editor.
