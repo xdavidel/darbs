@@ -129,7 +129,7 @@ putgitrepo() { # Downlods a gitrepo $1 and places the files in $2 only overwriti
 
 putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only overwriting conflicts
 	dialog --infobox "Downloading and installing bare config files..." 4 60
-	[ -d "$2" ] rm -rf "$2"
+	[ -d "$2" ] && rm -rf "$2"
 	mkdir -p "$2"
 	git clone --bare "$1" "$2" >/dev/null 2>&1
 	}
