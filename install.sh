@@ -12,7 +12,7 @@ while getopts ":a:r:b:p:h" o; do case "${o}" in
 esac done
 
 # DEFAULTS:
-[ -z "$dotfilesrepo" ] && dotfilesrepo="https://gitlab.com/xdavidel/dotfiles.git" && repobranch="master"
+[ -z "$dotfilesrepo" ] && dotfilesrepo="https://gitlab.com/xdavidel/dotfiles" && repobranch="master"
 [ -z "$progsfile" ] && progsfile="https://gitlab.com/xdavidel/darbs/raw/master/progs.csv"
 [ -z "$aurhelper" ] && aurhelper="yay"
 [ -z "$repobranch" ] && repobranch="master"
@@ -129,17 +129,15 @@ putgitrepo() { # Downlods a gitrepo $1 and places the files in $2 only overwriti
 
 putgitbarerepo() { # Downlods a bare gitrepo $1 and places the files in $2 only overwriting conflicts
 	dialog --infobox "Downloading and installing bare config files..." 4 60
-	dir=$(mktemp -d)
-	[ ! -d "$2" ] && mkdir -p "$2" && chown -R "$name:wheel" "$2"
-	chown -R "$name:wheel" "$dir"
-	sudo -u "$name" git clone --bare "$1" "$dir/gitrepo" >/dev/null 2>&1 &&
-	sudo -u "$name" cp -rfT "$dir/gitrepo" "$2"
+	[ -d "$2" ] rm -rf "$2"
+	mkdir -p "$2"
+	git clone --bare "$1" "$2" >/dev/null 2>&1
 	}
 
 activatedotfiles() {
-	sudo -u "$name" git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name checkout HEAD^
-	sudo -u "$name" git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name checkout -f master
-	sudo -u "$name" git --git-dir=/home/$name/.local/dotfiles/ --work-tree=/home/$name config status.showUntrackedFiles no
+	[ -z "$1" ] && dotrepo="/home/$name/.local/dotfiles/" || dotrepo="$1"
+	git --git-dir="$dotrepo" --work-tree="/home/$name" checkout -f
+	git --git-dir="$dotrepo" --work-tree="/home/$name" config status.showUntrackedFiles no
 	}
 
 serviceinit() { for service in "$@"; do
@@ -196,9 +194,6 @@ pacman --noconfirm --needed -S base-devel git >/dev/null 2>&1
 newperms "%wheel ALL=(ALL) NOPASSWD: ALL
 %wheel ALL=(ALL NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/packer -Syu,/usr/bin/packer -Syyu,/usr/bin/systemctl restart NetworkManager,/usr/bin/rc-service NetworkManager restart,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/yay,/usr/bin/pacman -Syyuw --noconfirm"
 
-# Make zsh the default shell for the user
-sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
-
 # Make pacman and yay colorful and adds eye candy on the progress bar because why not.
 grep "^Color" /etc/pacman.conf >/dev/null || sed -i "s/^#Color/Color/" /etc/pacman.conf
 grep "ILoveCandy" /etc/pacman.conf >/dev/null || sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
@@ -216,8 +211,11 @@ installationloop
 
 # Install the dotfiles in the user's home directory
 putgitbarerepo "$dotfilesrepo" "/home/$name/.local/dotfiles"
-chown -R "$name:wheel" "/home/$name/.local"
-activatedotfiles
+activatedotfiles "/home/$name/.local/dotfiles"
+chown -R "$name:wheel" "/home/$name"
+
+# Make zsh the default shell for the user
+sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
 
 # Pulseaudio, if/when initially installed, often needs a restart to work immediately.
 [ -f /usr/bin/pulseaudio ] && resetpulse

@@ -29,6 +29,7 @@ A,lf-bin,a ranger like file manager.
 ,materia-gtk-theme,gives the dark GTK theme used in DARBS.
 ,neovim,an tidier vim with some useful features.
 ,zsh,a better shell for the current millenia.
+,cronie,is a cronjob manager.
 ,alacritty,a second terminal with GPU rendering.
 ,awesome,the basic window manager based on dwm.
 ,geany,GUI text editor.
