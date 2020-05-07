@@ -33,7 +33,7 @@ A,lf-bin,a ranger like file manager.
 ,alacritty,a second terminal with GPU rendering.
 ,awesome,the basic window manager based on dwm.
 ,geany,GUI text editor.
-,i3lock,is the screen lock.
+,slock,is the screen lock.
 ,dmenu,is the default app runner.
 ,rofi,is another app runner.
 ,nodejs,javascript engine for dev (and nvim autocompletions).
