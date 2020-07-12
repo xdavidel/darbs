@@ -4,11 +4,10 @@
 ,xorg-xinit,starts the graphical server.
 ,xkb-switch,watches keyboard layout switch.
 ,sxhkd,binds key.
-,ttf-inconsolata,is the monospace font of DARBS.
 ,ttf-linux-libertine,provides the sans and serif fonts for DARBS.
-,ttf-font-awesome,provides font awesome icons.
+,ttf-liberations,provides monospace fonts.
 A,lf-bin,a ranger like file manager.
-,pcmanfm-gtk3,GUI file manager.
+,pcmanfm,GUI file manager.
 ,gvfs,an auto mounting driver.
 ,ed,is the standard editor!
 ,tree,lists directory contents like trees. Used by vifm.
