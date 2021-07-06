@@ -2,15 +2,13 @@
 ,xorg-server,is the graphical server.
 ,xorg-xwininfo,allows querying information about windows.
 ,xorg-xinit,starts the graphical server.
-,xkb-switch,watches keyboard layout switch.
 ,sxhkd,binds key.
 ,ttf-linux-libertine,provides the sans and serif fonts for DARBS.
 ,ttf-liberations,provides monospace fonts.
-A,lf-bin,a ranger like file manager.
 ,pcmanfm,GUI file manager.
+,chafa,Image to text converter
 ,gvfs,an auto mounting driver.
 ,ed,is the standard editor!
-,tree,lists directory contents like trees. Used by vifm.
 ,arandr,is a UI for screen adjustment.
 ,bc,is used for a dropdown calculator.
 ,man,menual pages for programs.
@@ -36,7 +34,7 @@ A,lf-bin,a ranger like file manager.
 ,rofi,is another app runner.
 ,nodejs,javascript engine for dev (and nvim autocompletions).
 ,npm,nodejs package manager.
-,ccls,language server for c/c++.
+,clang,C compiler + lsp
 ,mpd,is a lightweight music daemon.
 ,mpc,is a terminal interface for mpd.
 ,mpv,is the patrician's choice video player.
@@ -44,7 +42,6 @@ A,lf-bin,a ranger like file manager.
 ,networkmanager,does exactly what it sounds like.
 ,newsboat,is a terminal RSS client.
 ,firefox,is the only program on DARBS your girlfriend has ever heard of.
-A,brave-bin,	is an elegant browser with built-in adblocking, tor and other features.
 ,noto-fonts-emoji,goole package that gives the system unicode symbols and emojis.
 ,ntfs-3g,allows accessing NTFS partitions.
 ,pulseaudio,is the audio system.
@@ -52,7 +49,6 @@ A,brave-bin,	is an elegant browser with built-in adblocking, tor and other featu
 ,pulsemixer,is an intuitive ncurses audio controller.
 ,pamixer,is a command-line audio interface.
 ,imagemagick,is a terminal image-manipulator providing some convenient shortcuts and the lockscreen in DARBS.
-A,sc-im,is an Excel-like terminal spreadsheet manager.
 ,htop,provides system usage information and displays processes.
 ,maim,can take quick screenshots at your request.
 ,socat,is a socket utility.
@@ -62,7 +58,6 @@ A,sc-im,is an Excel-like terminal spreadsheet manager.
 ,unzip,unzips zips.
 ,p7zip,unzips 7zip files.
 ,bat,cat with syntax highligting.
-A,urlscan,parses URLs in the terminal allowing keyboard-based selection.
 ,w3m,is a terminal browser which can also view images.
 ,xcape,gives the special escape/super mappings of DARBS.
 ,xclip,allows for copying and pasting from the command line.
@@ -80,10 +75,15 @@ A,urlscan,parses URLs in the terminal allowing keyboard-based selection.
 ,fzf,is a fuzzy finder tool.
 ,highlight,can highlight code output.
 ,xorg-xbacklight,enables changing screen brightness levels.
+,docx2txt,enables .docx file previews.
+,odt2txt,enables .odt file previews.
+A,brave-bin,	is an elegant browser with built-in adblocking, tor and other features.
+A,urlscan,parses URLs in the terminal allowing keyboard-based selection.
+A,sc-im,is an Excel-like terminal spreadsheet manager.
+A,lf-bin,a ranger like file manager.
+A,xkb-switch,watches keyboard layout switch.
 A,simple-mtpfs,enables the mounting of cell phones.
 G,https://gitlab.com/xdavidel/st.git,is my custom build of suckless's terminal emulator.
 G,https://gitlab.com/xdavidel/dmenu.git,is my custom build of dmenu.
 G,https://gitlab.com/xdavidel/dwmblocks.git,is my custom build of dwmblocks.
 G,https://gitlab.com/xdavidel/dwm.git,is my custom build of dwm with dual pannel.
-,docx2txt,enables .docx file previews.
-,odt2txt,enables .odt file previews.
